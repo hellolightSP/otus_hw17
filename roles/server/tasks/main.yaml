@@ -10,6 +10,20 @@
     name: borgbackup
     state: latest
 
+- name: Create File System on backup disk
+  filesystem:
+    fstype: xfs
+    dev: /dev/sdb
+    force: yes
+
+- name: mount backup dir
+  mount:
+    path: /var/backup
+    src: /dev/sdb
+    fstype: xfs
+    opts: defaults
+    state: present
+
 - name: Create borg user
   user:
     name: borg
