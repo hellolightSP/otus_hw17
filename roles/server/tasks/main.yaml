@@ -14,7 +14,7 @@
   filesystem:
     fstype: xfs
     dev: /dev/sdb
-    force: yes
+    force: no
 
 - name: mount backup dir
   mount:
