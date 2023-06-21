@@ -30,7 +30,7 @@
     mode: '600'
     
 - name: add ssh key from client
-  shell:  echo 'command="/usr/local/bin/borg serve" {rsa}' > /home/borg/.ssh/authorized_keys
+  shell:  echo 'command="/usr/local/bin/borg serve" {{ rsa }}' > /home/borg/.ssh/authorized_keys
   
 - name: Change backupdir ownership /var/backup/
   file:
