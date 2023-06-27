@@ -1,0 +1,8 @@
+---
+- name: Configuration backup server
+  hosts: all
+  become: yes
+
+  roles:
+    - { role: client, when: ansible_hostname == 'client' }
+    - { role: server, when: ansible_hostname == 'server' }

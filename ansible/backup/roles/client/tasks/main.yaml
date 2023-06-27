@@ -1,0 +1,48 @@
+---
+
+- name: install epel repo
+  yum:
+    name: epel-release
+    state: latest
+    
+- name: install borgbackup
+  yum:
+    name: borgbackup
+    state: latest
+
+- name: Generate an OpenSSH rsa keypair with a different size (2048 bits)
+  community.crypto.openssh_keypair:
+    path: /tmp/id_ssh_rsa
+    size: 2048
+
+- name: get id rsa
+  shell: cat /tmp/id_ssh_rsa.pub
+  register: id_rsa
+
+- set_fact:
+    id_rsa: "{{ id_rsa.stdout }}"
+
+
+- debug: 
+    var: id_rsa
+
+- name: Create a borg-backup.service
+  template: 
+    src: borg-backup.service.j2
+    dest: /etc/systemd/system/borg-backup.service
+    
+- name: Create a borg-backup.timer
+  template:
+    src: borg-backup.timer.j2   
+    dest: /etc/systemd/system/borg-backup.timer
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  
+- name: enable borg-backup.service
+  command: systemctl enable borg-backup.service && systemctl start borg-backup.service
+  ignore_errors: true
+
+- name: enable borg-backup.timer
+  command: systemctl enable borg-backup.timer && systemctl start borg-backup.timer
+  ignore_errors: true
