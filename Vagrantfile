@@ -63,7 +63,7 @@ case boxname.to_s
     config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/backup/install.yaml"
     ansible.limit = "all"
-    ansible.verbose = "true"
+#    ansible.verbose = "true"
       end
     end
   end
