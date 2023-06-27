@@ -1,4 +1,3 @@
-123
 
 ```
 [root@client vagrant]# systemctl list-timers --all
@@ -8,7 +7,6 @@ Wed 2023-06-28 21:30:47 UTC  23h left      Tue 2023-06-27 21:30:47 UTC  6min ago
 n/a                          n/a           n/a                          n/a          systemd-readahead-done.timer systemd-readahead-done.service
 
 3 timers listed.
-```
 
 [root@client vagrant]# borg list borg@192.168.56.160:/var/backup/
 Remote: Warning: Permanently added '192.168.56.160' (ECDSA) to the list of known hosts.
