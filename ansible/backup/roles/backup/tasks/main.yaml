@@ -1,0 +1,147 @@
+---
+
+- name: install epel repo
+  yum:
+    name: epel-release
+    state: latest
+    
+- name: install borgbackup
+  yum:
+    name: borgbackup
+    state: latest
+
+
+- name: install client block
+  block:
+
+    - name: Create ssh root dir
+      file:
+        path: /root/.ssh/
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: Create a borg-backup.service
+      template: 
+        src: borg-backup.service.j2
+        dest: /etc/systemd/system/borg-backup.service
+    
+    - name: Create a borg-backup.timer
+      template:
+       src: borg-backup.timer.j2   
+       dest: /etc/systemd/system/borg-backup.timer
+
+  when: ansible_hostname == 'client'
+
+- name: Generate an OpenSSH rsa keypair with a different size (2048 bits)
+  community.crypto.openssh_keypair:
+    path: /root/.ssh/id_rsa
+    size: 2048
+  run_once: true
+
+- name: get id rsa
+  shell: cat /root/.ssh/id_rsa.pub
+  register: rsa_key
+  run_once: true
+
+- set_fact:
+    id_rsa: "{{ rsa_key.stdout }}"
+    cacheable: yes
+  run_once: true
+
+- name: get local facts
+  setup:
+    fact_path: "/etc/ansible/facts.d"
+
+- debug:
+    var: id_rsa
+
+- name: install server block
+  block:
+
+    - name: Create File System on backup disk
+      filesystem:
+        fstype: xfs
+        dev: /dev/sdb
+        force: no
+
+    - name: Create borg user
+      user:
+        name: borg
+        createhome: yes
+        home: /home/borg
+
+    - name: Create /.ssh/ dir
+      file:
+        path: /home/borg/.ssh/
+        state: directory
+        owner: borg
+        group: borg
+        mode: '0700'
+
+    - name: Create /.ssh/authorized_keys
+      file:
+        path: /home/borg/.ssh/authorized_keys
+        state: touch
+        owner: borg
+        group: borg
+        mode: '0600'
+
+    - name: Change backupdir ownership /var/backup/
+      file:
+        path: /var/backup/
+        state: directory
+        recurse: yes
+        owner: borg
+        group: borg
+
+    - name: create fstab
+      mount:
+        path: /var/backup
+        src: /dev/sdb
+        fstype: xfs
+        opts: defaults
+        state: present
+
+    - name: mount /var/backup
+      command: mount -a
+
+    - name: add ssh key from client
+      shell:  echo 'command="/usr/bin/borg serve" {{ id_rsa }}' > /home/borg/.ssh/authorized_keys
+  when: ansible_hostname == 'server'
+
+- name: create borg service and timer 
+  block:
+    
+    - name: update ssh config
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        line: 'Host 192.168.56.160'
+
+    - name: update ssh config
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        line: 'UserKnownHostsFile=/dev/null'
+
+    - name: update ssh config
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        line: 'StrictHostKeyChecking=no'
+          
+    - name: repo init
+      command: borg init -e none borg@192.168.56.160:/var/backup
+      ignore_errors: true
+
+    - name: daemon reload on client
+      command: systemctl daemon-reload
+
+    - name: enable borg-backup.service
+      shell: systemctl enable borg-backup.service && systemctl restart borg-backup.service
+      ignore_errors: true
+
+    - name: enable borg-backup.timer
+      shell: systemctl enable borg-backup.timer && systemctl restart borg-backup.timer
+      ignore_errors: true
+
+  when: ansible_hostname == 'client'
