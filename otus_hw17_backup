@@ -1,0 +1,487 @@
+Bringing machine 'client' up with 'virtualbox' provider...
+Bringing machine 'server' up with 'virtualbox' provider...
+==> client: Importing base box 'CentOS-7-x86_64-Vagrant-2004_01'...
+[KProgress: 20%[KProgress: 40%[KProgress: 70%[KProgress: 90%[K==> client: Matching MAC address for NAT networking...
+==> client: Setting the name of the VM: test_vm_client_1687955455572_9475
+==> client: Clearing any previously set network interfaces...
+==> client: Preparing network interfaces based on configuration...
+    client: Adapter 1: nat
+    client: Adapter 2: hostonly
+==> client: Forwarding ports...
+    client: 22 (guest) => 2222 (host) (adapter 1)
+==> client: Running 'pre-boot' VM customizations...
+==> client: Booting VM...
+==> client: Waiting for machine to boot. This may take a few minutes...
+    client: SSH address: 127.0.0.1:2222
+    client: SSH username: vagrant
+    client: SSH auth method: private key
+    client: 
+    client: Vagrant insecure key detected. Vagrant will automatically replace
+    client: this with a newly generated keypair for better security.
+    client: 
+    client: Inserting generated public key within guest...
+    client: Removing insecure key from the guest if it's present...
+    client: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> client: Machine booted and ready!
+==> client: Checking for guest additions in VM...
+    client: No guest additions were detected on the base box for this VM! Guest
+    client: additions are required for forwarded ports, shared folders, host only
+    client: networking, and more. If SSH fails on this machine, please install
+    client: the guest additions and repackage the box to continue.
+    client: 
+    client: This is not an error message; everything may continue to work properly,
+    client: in which case you may ignore this message.
+==> client: Setting hostname...
+==> client: Configuring and enabling network interfaces...
+==> client: Running provisioner: ansible...
+    client: Running ansible-playbook...
+PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true ANSIBLE_HOST_KEY_CHECKING=false ANSIBLE_SSH_ARGS='-o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ControlMaster=auto -o ControlPersist=60s' ansible-playbook --connection=ssh --timeout=30 --limit="all" --inventory-file=/test_vm/.vagrant/provisioners/ansible/inventory -v ansible/backup/install.yaml
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [Configuration backup server] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [client]
+
+TASK [backup : install epel repo] **********************************************
+changed: [client] => {"changed": true, "changes": {"installed": ["epel-release"], "updated": []}, "msg": "warning: /var/cache/yum/x86_64/7/extras/packages/epel-release-7-11.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY\nImporting GPG key 0xF4A80EB5:\n Userid     : \"CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>\"\n Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5\n Package    : centos-release-7-8.2003.0.el7.centos.x86_64 (@anaconda)\n From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7\n", "rc": 0, "results": ["Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirror.corbina.net\n * extras: mirror.docker.ru\n * updates: mirror.docker.ru\nResolving Dependencies\n--> Running transaction check\n---> Package epel-release.noarch 0:7-11 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                Arch             Version         Repository        Size\n================================================================================\nInstalling:\n epel-release           noarch           7-11            extras            15 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 15 k\nInstalled size: 24 k\nDownloading packages:\nPublic key for epel-release-7-11.noarch.rpm is not installed\nRetrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : epel-release-7-11.noarch                                     1/1 \n  Verifying  : epel-release-7-11.noarch                                     1/1 \n\nInstalled:\n  epel-release.noarch 0:7-11                                                    \n\nComplete!\n"]}
+
+TASK [backup : install borgbackup] *********************************************
+changed: [client] => {"changed": true, "changes": {"installed": ["borgbackup"], "updated": []}, "msg": "warning: /var/cache/yum/x86_64/7/epel/packages/libb2-0.98.1-2.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 352c64e5: NOKEY\nImporting GPG key 0x352C64E5:\n Userid     : \"Fedora EPEL (7) <epel@fedoraproject.org>\"\n Fingerprint: 91e9 7d7c 4a5e 96f1 7f3e 888f 6a2f aea2 352c 64e5\n Package    : epel-release-7-11.noarch (@extras)\n From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7\n", "rc": 0, "results": ["Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirror.corbina.net\n * epel: mirror.logol.ru\n * extras: mirror.docker.ru\n * updates: mirror.docker.ru\nResolving Dependencies\n--> Running transaction check\n---> Package borgbackup.x86_64 0:1.1.18-1.el7 will be installed\n--> Processing Dependency: python(abi) = 3.6 for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-msgpack <= 0.5.6 for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: /usr/bin/python3 for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-llfuse for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-packaging for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-setuptools for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libb2.so.1()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libpython3.6m.so.1.0()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libxxhash.so.0()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libzstd.so.1()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Running transaction check\n---> Package libb2.x86_64 0:0.98.1-2.el7 will be installed\n---> Package libzstd.x86_64 0:1.5.5-1.el7 will be installed\n---> Package python3.x86_64 0:3.6.8-19.el7_9 will be installed\n--> Processing Dependency: python3-pip for package: python3-3.6.8-19.el7_9.x86_64\n---> Package python3-libs.x86_64 0:3.6.8-19.el7_9 will be installed\n---> Package python3-setuptools.noarch 0:39.2.0-10.el7 will be installed\n---> Package python36-llfuse.x86_64 0:1.0-2.el7 will be installed\n---> Package python36-msgpack.x86_64 0:0.5.6-5.el7 will be installed\n---> Package python36-packaging.noarch 0:16.8-6.el7 will be installed\n--> Processing Dependency: python36-pyparsing for package: python36-packaging-16.8-6.el7.noarch\n--> Processing Dependency: python36-six for package: python36-packaging-16.8-6.el7.noarch\n---> Package xxhash-libs.x86_64 0:0.8.1-1.el7 will be installed\n--> Running transaction check\n---> Package python3-pip.noarch 0:9.0.3-8.el7 will be installed\n---> Package python36-pyparsing.noarch 0:2.4.0-1.el7 will be installed\n---> Package python36-six.noarch 0:1.14.0-3.el7 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                  Arch         Version              Repository     Size\n================================================================================\nInstalling:\n borgbackup               x86_64       1.1.18-1.el7         epel          1.0 M\nInstalling for dependencies:\n libb2                    x86_64       0.98.1-2.el7         epel           20 k\n libzstd                  x86_64       1.5.5-1.el7          epel          292 k\n python3                  x86_64       3.6.8-19.el7_9       updates        70 k\n python3-libs             x86_64       3.6.8-19.el7_9       updates       6.9 M\n python3-pip              noarch       9.0.3-8.el7          base          1.6 M\n python3-setuptools       noarch       39.2.0-10.el7        base          629 k\n python36-llfuse          x86_64       1.0-2.el7            epel          351 k\n python36-msgpack         x86_64       0.5.6-5.el7          epel           98 k\n python36-packaging       noarch       16.8-6.el7           epel           43 k\n python36-pyparsing       noarch       2.4.0-1.el7          epel          145 k\n python36-six             noarch       1.14.0-3.el7         epel           34 k\n xxhash-libs              x86_64       0.8.1-1.el7          epel           32 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package (+12 Dependent packages)\n\nTotal download size: 11 M\nInstalled size: 55 M\nDownloading packages:\nPublic key for libb2-0.98.1-2.el7.x86_64.rpm is not installed\n--------------------------------------------------------------------------------\nTotal                                              8.2 MB/s |  11 MB  00:01     \nRetrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : python3-setuptools-39.2.0-10.el7.noarch                     1/13 \n  Installing : python3-pip-9.0.3-8.el7.noarch                              2/13 \n  Installing : python3-libs-3.6.8-19.el7_9.x86_64                          3/13 \n  Installing : python3-3.6.8-19.el7_9.x86_64                               4/13 \n  Installing : python36-msgpack-0.5.6-5.el7.x86_64                         5/13 \n  Installing : python36-pyparsing-2.4.0-1.el7.noarch                       6/13 \n  Installing : python36-six-1.14.0-3.el7.noarch                            7/13 \n  Installing : python36-packaging-16.8-6.el7.noarch                        8/13 \n  Installing : python36-llfuse-1.0-2.el7.x86_64                            9/13 \n  Installing : xxhash-libs-0.8.1-1.el7.x86_64                             10/13 \n  Installing : libb2-0.98.1-2.el7.x86_64                                  11/13 \n  Installing : libzstd-1.5.5-1.el7.x86_64                                 12/13 \n  Installing : borgbackup-1.1.18-1.el7.x86_64                             13/13 \n  Verifying  : borgbackup-1.1.18-1.el7.x86_64                              1/13 \n  Verifying  : python36-msgpack-0.5.6-5.el7.x86_64                         2/13 \n  Verifying  : python36-pyparsing-2.4.0-1.el7.noarch                       3/13 \n  Verifying  : libzstd-1.5.5-1.el7.x86_64                                  4/13 \n  Verifying  : python3-3.6.8-19.el7_9.x86_64                               5/13 \n  Verifying  : python36-packaging-16.8-6.el7.noarch                        6/13 \n  Verifying  : libb2-0.98.1-2.el7.x86_64                                   7/13 \n  Verifying  : python3-setuptools-39.2.0-10.el7.noarch                     8/13 \n  Verifying  : python3-pip-9.0.3-8.el7.noarch                              9/13 \n  Verifying  : python36-six-1.14.0-3.el7.noarch                           10/13 \n  Verifying  : xxhash-libs-0.8.1-1.el7.x86_64                             11/13 \n  Verifying  : python36-llfuse-1.0-2.el7.x86_64                           12/13 \n  Verifying  : python3-libs-3.6.8-19.el7_9.x86_64                         13/13 \n\nInstalled:\n  borgbackup.x86_64 0:1.1.18-1.el7                                              \n\nDependency Installed:\n  libb2.x86_64 0:0.98.1-2.el7                                                   \n  libzstd.x86_64 0:1.5.5-1.el7                                                  \n  python3.x86_64 0:3.6.8-19.el7_9                                               \n  python3-libs.x86_64 0:3.6.8-19.el7_9                                          \n  python3-pip.noarch 0:9.0.3-8.el7                                              \n  python3-setuptools.noarch 0:39.2.0-10.el7                                     \n  python36-llfuse.x86_64 0:1.0-2.el7                                            \n  python36-msgpack.x86_64 0:0.5.6-5.el7                                         \n  python36-packaging.noarch 0:16.8-6.el7                                        \n  python36-pyparsing.noarch 0:2.4.0-1.el7                                       \n  python36-six.noarch 0:1.14.0-3.el7                                            \n  xxhash-libs.x86_64 0:0.8.1-1.el7                                              \n\nComplete!\n"]}
+
+TASK [backup : Create ssh root dir] ********************************************
+changed: [client] => {"changed": true, "gid": 0, "group": "root", "mode": "0700", "owner": "root", "path": "/root/.ssh/", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 6, "state": "directory", "uid": 0}
+
+TASK [backup : Create a borg-backup.service] ***********************************
+changed: [client] => {"changed": true, "checksum": "fe1b5d1d94ea84c3800f8fd40245797a9b426891", "dest": "/etc/systemd/system/borg-backup.service", "gid": 0, "group": "root", "md5sum": "08e436d7968c222387b60220c152bd04", "mode": "0644", "owner": "root", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 488, "src": "/home/vagrant/.ansible/tmp/ansible-tmp-1687955545.5353954-55786-201999919821968/source", "state": "file", "uid": 0}
+
+TASK [backup : Create a borg-backup.timer] *************************************
+changed: [client] => {"changed": true, "checksum": "84fb7bdd19f0a5aa87a44c2dac1905e0e12d1a1c", "dest": "/etc/systemd/system/borg-backup.timer", "gid": 0, "group": "root", "md5sum": "d4f6d33814e84ad7798f719301d88274", "mode": "0644", "owner": "root", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 94, "src": "/home/vagrant/.ansible/tmp/ansible-tmp-1687955546.260923-55802-57311906181903/source", "state": "file", "uid": 0}
+
+TASK [backup : Generate an OpenSSH rsa keypair with a different size (2048 bits)] ***
+changed: [client] => {"changed": true, "comment": "", "filename": "/root/.ssh/id_rsa", "fingerprint": "SHA256:X7mWQA26Rdzmly4rCREQNs1QXky4C9Xzhsso+w08WTA", "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP", "size": 2048, "type": "rsa"}
+
+TASK [backup : get id rsa] *****************************************************
+changed: [client] => {"changed": true, "cmd": "cat /root/.ssh/id_rsa.pub", "delta": "0:00:00.003463", "end": "2023-06-28 12:32:27.689034", "rc": 0, "start": "2023-06-28 12:32:27.685571", "stderr": "", "stderr_lines": [], "stdout": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP ", "stdout_lines": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "]}
+
+TASK [backup : set_fact] *******************************************************
+ok: [client] => {"ansible_facts": {"id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "}, "changed": false}
+
+TASK [backup : get local facts] ************************************************
+ok: [client]
+
+TASK [backup : debug] **********************************************************
+ok: [client] => {
+    "id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "
+}
+
+TASK [backup : Create File System on backup disk] ******************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Create borg user] ***********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Create /.ssh/ dir] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Create /.ssh/authorized_keys] ***********************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Change backupdir ownership /var/backup/] ************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : create fstab] ***************************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : mount /var/backup] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : add ssh key from client] ****************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : update ssh config] **********************************************
+changed: [client] => {"backup": "", "changed": true, "msg": "line added"}
+
+TASK [backup : update ssh config] **********************************************
+changed: [client] => {"backup": "", "changed": true, "msg": "line added"}
+
+TASK [backup : update ssh config] **********************************************
+changed: [client] => {"backup": "", "changed": true, "msg": "line added"}
+
+TASK [backup : repo init] ******************************************************
+fatal: [client]: FAILED! => {"changed": true, "cmd": ["borg", "init", "-e", "none", "borg@192.168.56.160:/var/backup"], "delta": "0:00:03.651326", "end": "2023-06-28 12:32:33.687981", "msg": "non-zero return code", "rc": 2, "start": "2023-06-28 12:32:30.036655", "stderr": "Connection closed by remote host. Is borg working on the server?", "stderr_lines": ["Connection closed by remote host. Is borg working on the server?"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [backup : daemon reload on client] ****************************************
+changed: [client] => {"changed": true, "cmd": ["systemctl", "daemon-reload"], "delta": "0:00:00.073853", "end": "2023-06-28 12:32:34.052870", "rc": 0, "start": "2023-06-28 12:32:33.979017", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.timer] ***************************************
+changed: [client] => {"changed": true, "cmd": "systemctl enable borg-backup.timer && systemctl restart borg-backup.timer", "delta": "0:00:00.071564", "end": "2023-06-28 12:32:34.419711", "rc": 0, "start": "2023-06-28 12:32:34.348147", "stderr": "Created symlink from /etc/systemd/system/timers.target.wants/borg-backup.timer to /etc/systemd/system/borg-backup.timer.", "stderr_lines": ["Created symlink from /etc/systemd/system/timers.target.wants/borg-backup.timer to /etc/systemd/system/borg-backup.timer."], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.service] *************************************
+fatal: [client]: FAILED! => {"changed": true, "cmd": "systemctl enable borg-backup.service && systemctl restart borg-backup.service", "delta": "0:00:01.967790", "end": "2023-06-28 12:32:36.681599", "msg": "non-zero return code", "rc": 1, "start": "2023-06-28 12:32:34.713809", "stderr": "Job for borg-backup.service failed because the control process exited with error code. See \"systemctl status borg-backup.service\" and \"journalctl -xe\" for details.", "stderr_lines": ["Job for borg-backup.service failed because the control process exited with error code. See \"systemctl status borg-backup.service\" and \"journalctl -xe\" for details."], "stdout": "", "stdout_lines": []}
+...ignoring
+
+PLAY RECAP *********************************************************************
+client                     : ok=18   changed=14   unreachable=0    failed=0    skipped=8    rescued=0    ignored=2   
+
+==> client: Running provisioner: ansible...
+    client: Running ansible-playbook...
+PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true ANSIBLE_HOST_KEY_CHECKING=false ANSIBLE_SSH_ARGS='-o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ControlMaster=auto -o ControlPersist=60s' ansible-playbook --connection=ssh --timeout=30 --limit="all" --inventory-file=/test_vm/.vagrant/provisioners/ansible/inventory -v ansible/backup/install.yaml
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [Configuration backup server] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [client]
+
+TASK [backup : install epel repo] **********************************************
+changed: [client] => {"changed": true, "changes": {"installed": [], "updated": [["epel-release", "7-14.noarch from epel"]]}, "msg": "", "rc": 0, "results": ["Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirror.corbina.net\n * epel: mirror.logol.ru\n * extras: mirror.docker.ru\n * updates: mirror.docker.ru\nResolving Dependencies\n--> Running transaction check\n---> Package epel-release.noarch 0:7-11 will be updated\n---> Package epel-release.noarch 0:7-14 will be an update\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                Arch             Version           Repository      Size\n================================================================================\nUpdating:\n epel-release           noarch           7-14              epel            15 k\n\nTransaction Summary\n================================================================================\nUpgrade  1 Package\n\nTotal download size: 15 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Updating   : epel-release-7-14.noarch                                     1/2 \n  Cleanup    : epel-release-7-11.noarch                                     2/2 \n  Verifying  : epel-release-7-14.noarch                                     1/2 \n  Verifying  : epel-release-7-11.noarch                                     2/2 \n\nUpdated:\n  epel-release.noarch 0:7-14                                                    \n\nComplete!\n"]}
+
+TASK [backup : install borgbackup] *********************************************
+ok: [client] => {"changed": false, "changes": {"installed": [], "updated": []}, "msg": "", "rc": 0, "results": ["All packages providing borgbackup are up to date", ""]}
+
+TASK [backup : Create ssh root dir] ********************************************
+ok: [client] => {"changed": false, "gid": 0, "group": "root", "mode": "0700", "owner": "root", "path": "/root/.ssh/", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 38, "state": "directory", "uid": 0}
+
+TASK [backup : Create a borg-backup.service] ***********************************
+ok: [client] => {"changed": false, "checksum": "fe1b5d1d94ea84c3800f8fd40245797a9b426891", "dest": "/etc/systemd/system/borg-backup.service", "gid": 0, "group": "root", "mode": "0644", "owner": "root", "path": "/etc/systemd/system/borg-backup.service", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 488, "state": "file", "uid": 0}
+
+TASK [backup : Create a borg-backup.timer] *************************************
+ok: [client] => {"changed": false, "checksum": "84fb7bdd19f0a5aa87a44c2dac1905e0e12d1a1c", "dest": "/etc/systemd/system/borg-backup.timer", "gid": 0, "group": "root", "mode": "0644", "owner": "root", "path": "/etc/systemd/system/borg-backup.timer", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 94, "state": "file", "uid": 0}
+
+TASK [backup : Generate an OpenSSH rsa keypair with a different size (2048 bits)] ***
+ok: [client] => {"changed": false, "comment": "", "filename": "/root/.ssh/id_rsa", "fingerprint": "SHA256:X7mWQA26Rdzmly4rCREQNs1QXky4C9Xzhsso+w08WTA", "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP", "size": 2048, "type": "rsa"}
+
+TASK [backup : get id rsa] *****************************************************
+changed: [client] => {"changed": true, "cmd": "cat /root/.ssh/id_rsa.pub", "delta": "0:00:00.003267", "end": "2023-06-28 12:33:35.496293", "rc": 0, "start": "2023-06-28 12:33:35.493026", "stderr": "", "stderr_lines": [], "stdout": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP ", "stdout_lines": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "]}
+
+TASK [backup : set_fact] *******************************************************
+ok: [client] => {"ansible_facts": {"id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "}, "changed": false}
+
+TASK [backup : get local facts] ************************************************
+ok: [client]
+
+TASK [backup : debug] **********************************************************
+ok: [client] => {
+    "id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "
+}
+
+TASK [backup : Create File System on backup disk] ******************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Create borg user] ***********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Create /.ssh/ dir] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Create /.ssh/authorized_keys] ***********************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : Change backupdir ownership /var/backup/] ************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : create fstab] ***************************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : mount /var/backup] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : add ssh key from client] ****************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [backup : update ssh config] **********************************************
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : update ssh config] **********************************************
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : update ssh config] **********************************************
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : repo init] ******************************************************
+fatal: [client]: FAILED! => {"changed": true, "cmd": ["borg", "init", "-e", "none", "borg@192.168.56.160:/var/backup"], "delta": "0:00:03.631864", "end": "2023-06-28 12:33:41.402637", "msg": "non-zero return code", "rc": 2, "start": "2023-06-28 12:33:37.770773", "stderr": "Connection closed by remote host. Is borg working on the server?", "stderr_lines": ["Connection closed by remote host. Is borg working on the server?"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [backup : daemon reload on client] ****************************************
+changed: [client] => {"changed": true, "cmd": ["systemctl", "daemon-reload"], "delta": "0:00:00.068796", "end": "2023-06-28 12:33:41.794189", "rc": 0, "start": "2023-06-28 12:33:41.725393", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.timer] ***************************************
+changed: [client] => {"changed": true, "cmd": "systemctl enable borg-backup.timer && systemctl restart borg-backup.timer", "delta": "0:00:00.070348", "end": "2023-06-28 12:33:42.166046", "rc": 0, "start": "2023-06-28 12:33:42.095698", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.service] *************************************
+fatal: [client]: FAILED! => {"changed": true, "cmd": "systemctl enable borg-backup.service && systemctl restart borg-backup.service", "delta": "0:00:01.953923", "end": "2023-06-28 12:33:44.417429", "msg": "non-zero return code", "rc": 1, "start": "2023-06-28 12:33:42.463506", "stderr": "Job for borg-backup.service failed because the control process exited with error code. See \"systemctl status borg-backup.service\" and \"journalctl -xe\" for details.", "stderr_lines": ["Job for borg-backup.service failed because the control process exited with error code. See \"systemctl status borg-backup.service\" and \"journalctl -xe\" for details."], "stdout": "", "stdout_lines": []}
+...ignoring
+
+PLAY RECAP *********************************************************************
+client                     : ok=18   changed=6    unreachable=0    failed=0    skipped=8    rescued=0    ignored=2   
+
+==> server: Importing base box 'CentOS-7-x86_64-Vagrant-2004_01'...
+[KProgress: 20%[KProgress: 40%[KProgress: 70%[KProgress: 90%[K==> server: Matching MAC address for NAT networking...
+==> server: Setting the name of the VM: test_vm_server_1687955632316_69287
+==> server: Fixed port collision for 22 => 2222. Now on port 2200.
+==> server: Clearing any previously set network interfaces...
+==> server: Preparing network interfaces based on configuration...
+    server: Adapter 1: nat
+    server: Adapter 2: hostonly
+==> server: Forwarding ports...
+    server: 22 (guest) => 2200 (host) (adapter 1)
+==> server: Running 'pre-boot' VM customizations...
+==> server: Booting VM...
+==> server: Waiting for machine to boot. This may take a few minutes...
+    server: SSH address: 127.0.0.1:2200
+    server: SSH username: vagrant
+    server: SSH auth method: private key
+    server: 
+    server: Vagrant insecure key detected. Vagrant will automatically replace
+    server: this with a newly generated keypair for better security.
+    server: 
+    server: Inserting generated public key within guest...
+    server: Removing insecure key from the guest if it's present...
+    server: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> server: Machine booted and ready!
+==> server: Checking for guest additions in VM...
+    server: No guest additions were detected on the base box for this VM! Guest
+    server: additions are required for forwarded ports, shared folders, host only
+    server: networking, and more. If SSH fails on this machine, please install
+    server: the guest additions and repackage the box to continue.
+    server: 
+    server: This is not an error message; everything may continue to work properly,
+    server: in which case you may ignore this message.
+==> server: Setting hostname...
+==> server: Configuring and enabling network interfaces...
+==> server: Running provisioner: ansible...
+    server: Running ansible-playbook...
+PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true ANSIBLE_HOST_KEY_CHECKING=false ANSIBLE_SSH_ARGS='-o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ControlMaster=auto -o ControlPersist=60s' ansible-playbook --connection=ssh --timeout=30 --limit="all" --inventory-file=/test_vm/.vagrant/provisioners/ansible/inventory -v ansible/backup/install.yaml
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [Configuration backup server] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [client]
+ok: [server]
+
+TASK [backup : install epel repo] **********************************************
+changed: [server] => {"changed": true, "changes": {"installed": ["epel-release"], "updated": []}, "msg": "warning: /var/cache/yum/x86_64/7/extras/packages/epel-release-7-11.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY\nImporting GPG key 0xF4A80EB5:\n Userid     : \"CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>\"\n Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5\n Package    : centos-release-7-8.2003.0.el7.centos.x86_64 (@anaconda)\n From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7\n", "rc": 0, "results": ["Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirrors.datahouse.ru\n * extras: mirrors.datahouse.ru\n * updates: centos-mirror.rbc.ru\nResolving Dependencies\n--> Running transaction check\n---> Package epel-release.noarch 0:7-11 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                Arch             Version         Repository        Size\n================================================================================\nInstalling:\n epel-release           noarch           7-11            extras            15 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 15 k\nInstalled size: 24 k\nDownloading packages:\nPublic key for epel-release-7-11.noarch.rpm is not installed\nRetrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : epel-release-7-11.noarch                                     1/1 \n  Verifying  : epel-release-7-11.noarch                                     1/1 \n\nInstalled:\n  epel-release.noarch 0:7-11                                                    \n\nComplete!\n"]}
+ok: [client] => {"changed": false, "changes": {"installed": [], "updated": []}, "msg": "", "rc": 0, "results": ["All packages providing epel-release are up to date", ""]}
+
+TASK [backup : install borgbackup] *********************************************
+ok: [client] => {"changed": false, "changes": {"installed": [], "updated": []}, "msg": "", "rc": 0, "results": ["All packages providing borgbackup are up to date", ""]}
+changed: [server] => {"changed": true, "changes": {"installed": ["borgbackup"], "updated": []}, "msg": "warning: /var/cache/yum/x86_64/7/epel/packages/borgbackup-1.1.18-1.el7.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID 352c64e5: NOKEY\nImporting GPG key 0x352C64E5:\n Userid     : \"Fedora EPEL (7) <epel@fedoraproject.org>\"\n Fingerprint: 91e9 7d7c 4a5e 96f1 7f3e 888f 6a2f aea2 352c 64e5\n Package    : epel-release-7-11.noarch (@extras)\n From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7\n", "rc": 0, "results": ["Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirrors.datahouse.ru\n * epel: fedora-mirror02.rbc.ru\n * extras: mirrors.datahouse.ru\n * updates: centos-mirror.rbc.ru\nResolving Dependencies\n--> Running transaction check\n---> Package borgbackup.x86_64 0:1.1.18-1.el7 will be installed\n--> Processing Dependency: python(abi) = 3.6 for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-msgpack <= 0.5.6 for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: /usr/bin/python3 for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-llfuse for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-packaging for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: python36-setuptools for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libb2.so.1()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libpython3.6m.so.1.0()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libxxhash.so.0()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Processing Dependency: libzstd.so.1()(64bit) for package: borgbackup-1.1.18-1.el7.x86_64\n--> Running transaction check\n---> Package libb2.x86_64 0:0.98.1-2.el7 will be installed\n---> Package libzstd.x86_64 0:1.5.5-1.el7 will be installed\n---> Package python3.x86_64 0:3.6.8-19.el7_9 will be installed\n--> Processing Dependency: python3-pip for package: python3-3.6.8-19.el7_9.x86_64\n---> Package python3-libs.x86_64 0:3.6.8-19.el7_9 will be installed\n---> Package python3-setuptools.noarch 0:39.2.0-10.el7 will be installed\n---> Package python36-llfuse.x86_64 0:1.0-2.el7 will be installed\n---> Package python36-msgpack.x86_64 0:0.5.6-5.el7 will be installed\n---> Package python36-packaging.noarch 0:16.8-6.el7 will be installed\n--> Processing Dependency: python36-pyparsing for package: python36-packaging-16.8-6.el7.noarch\n--> Processing Dependency: python36-six for package: python36-packaging-16.8-6.el7.noarch\n---> Package xxhash-libs.x86_64 0:0.8.1-1.el7 will be installed\n--> Running transaction check\n---> Package python3-pip.noarch 0:9.0.3-8.el7 will be installed\n---> Package python36-pyparsing.noarch 0:2.4.0-1.el7 will be installed\n---> Package python36-six.noarch 0:1.14.0-3.el7 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                  Arch         Version              Repository     Size\n================================================================================\nInstalling:\n borgbackup               x86_64       1.1.18-1.el7         epel          1.0 M\nInstalling for dependencies:\n libb2                    x86_64       0.98.1-2.el7         epel           20 k\n libzstd                  x86_64       1.5.5-1.el7          epel          292 k\n python3                  x86_64       3.6.8-19.el7_9       updates        70 k\n python3-libs             x86_64       3.6.8-19.el7_9       updates       6.9 M\n python3-pip              noarch       9.0.3-8.el7          base          1.6 M\n python3-setuptools       noarch       39.2.0-10.el7        base          629 k\n python36-llfuse          x86_64       1.0-2.el7            epel          351 k\n python36-msgpack         x86_64       0.5.6-5.el7          epel           98 k\n python36-packaging       noarch       16.8-6.el7           epel           43 k\n python36-pyparsing       noarch       2.4.0-1.el7          epel          145 k\n python36-six             noarch       1.14.0-3.el7         epel           34 k\n xxhash-libs              x86_64       0.8.1-1.el7          epel           32 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package (+12 Dependent packages)\n\nTotal download size: 11 M\nInstalled size: 55 M\nDownloading packages:\nPublic key for borgbackup-1.1.18-1.el7.x86_64.rpm is not installed\n--------------------------------------------------------------------------------\nTotal                                              7.1 MB/s |  11 MB  00:01     \nRetrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : python3-setuptools-39.2.0-10.el7.noarch                     1/13 \n  Installing : python3-pip-9.0.3-8.el7.noarch                              2/13 \n  Installing : python3-libs-3.6.8-19.el7_9.x86_64                          3/13 \n  Installing : python3-3.6.8-19.el7_9.x86_64                               4/13 \n  Installing : python36-msgpack-0.5.6-5.el7.x86_64                         5/13 \n  Installing : python36-pyparsing-2.4.0-1.el7.noarch                       6/13 \n  Installing : python36-six-1.14.0-3.el7.noarch                            7/13 \n  Installing : python36-packaging-16.8-6.el7.noarch                        8/13 \n  Installing : python36-llfuse-1.0-2.el7.x86_64                            9/13 \n  Installing : xxhash-libs-0.8.1-1.el7.x86_64                             10/13 \n  Installing : libb2-0.98.1-2.el7.x86_64                                  11/13 \n  Installing : libzstd-1.5.5-1.el7.x86_64                                 12/13 \n  Installing : borgbackup-1.1.18-1.el7.x86_64                             13/13 \n  Verifying  : borgbackup-1.1.18-1.el7.x86_64                              1/13 \n  Verifying  : python36-msgpack-0.5.6-5.el7.x86_64                         2/13 \n  Verifying  : python36-pyparsing-2.4.0-1.el7.noarch                       3/13 \n  Verifying  : libzstd-1.5.5-1.el7.x86_64                                  4/13 \n  Verifying  : python3-3.6.8-19.el7_9.x86_64                               5/13 \n  Verifying  : python36-packaging-16.8-6.el7.noarch                        6/13 \n  Verifying  : libb2-0.98.1-2.el7.x86_64                                   7/13 \n  Verifying  : python3-setuptools-39.2.0-10.el7.noarch                     8/13 \n  Verifying  : python3-pip-9.0.3-8.el7.noarch                              9/13 \n  Verifying  : python36-six-1.14.0-3.el7.noarch                           10/13 \n  Verifying  : xxhash-libs-0.8.1-1.el7.x86_64                             11/13 \n  Verifying  : python36-llfuse-1.0-2.el7.x86_64                           12/13 \n  Verifying  : python3-libs-3.6.8-19.el7_9.x86_64                         13/13 \n\nInstalled:\n  borgbackup.x86_64 0:1.1.18-1.el7                                              \n\nDependency Installed:\n  libb2.x86_64 0:0.98.1-2.el7                                                   \n  libzstd.x86_64 0:1.5.5-1.el7                                                  \n  python3.x86_64 0:3.6.8-19.el7_9                                               \n  python3-libs.x86_64 0:3.6.8-19.el7_9                                          \n  python3-pip.noarch 0:9.0.3-8.el7                                              \n  python3-setuptools.noarch 0:39.2.0-10.el7                                     \n  python36-llfuse.x86_64 0:1.0-2.el7                                            \n  python36-msgpack.x86_64 0:0.5.6-5.el7                                         \n  python36-packaging.noarch 0:16.8-6.el7                                        \n  python36-pyparsing.noarch 0:2.4.0-1.el7                                       \n  python36-six.noarch 0:1.14.0-3.el7                                            \n  xxhash-libs.x86_64 0:0.8.1-1.el7                                              \n\nComplete!\n"]}
+
+TASK [backup : Create ssh root dir] ********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"changed": false, "gid": 0, "group": "root", "mode": "0700", "owner": "root", "path": "/root/.ssh/", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 38, "state": "directory", "uid": 0}
+
+TASK [backup : Create a borg-backup.service] ***********************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"changed": false, "checksum": "fe1b5d1d94ea84c3800f8fd40245797a9b426891", "dest": "/etc/systemd/system/borg-backup.service", "gid": 0, "group": "root", "mode": "0644", "owner": "root", "path": "/etc/systemd/system/borg-backup.service", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 488, "state": "file", "uid": 0}
+
+TASK [backup : Create a borg-backup.timer] *************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"changed": false, "checksum": "84fb7bdd19f0a5aa87a44c2dac1905e0e12d1a1c", "dest": "/etc/systemd/system/borg-backup.timer", "gid": 0, "group": "root", "mode": "0644", "owner": "root", "path": "/etc/systemd/system/borg-backup.timer", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 94, "state": "file", "uid": 0}
+
+TASK [backup : Generate an OpenSSH rsa keypair with a different size (2048 bits)] ***
+ok: [client] => {"changed": false, "comment": "", "filename": "/root/.ssh/id_rsa", "fingerprint": "SHA256:X7mWQA26Rdzmly4rCREQNs1QXky4C9Xzhsso+w08WTA", "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP", "size": 2048, "type": "rsa"}
+
+TASK [backup : get id rsa] *****************************************************
+changed: [client] => {"changed": true, "cmd": "cat /root/.ssh/id_rsa.pub", "delta": "0:00:00.003369", "end": "2023-06-28 12:35:38.278927", "rc": 0, "start": "2023-06-28 12:35:38.275558", "stderr": "", "stderr_lines": [], "stdout": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP ", "stdout_lines": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "]}
+
+TASK [backup : set_fact] *******************************************************
+ok: [client] => {"ansible_facts": {"id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "}, "changed": false}
+
+TASK [backup : get local facts] ************************************************
+ok: [client]
+ok: [server]
+
+TASK [backup : debug] **********************************************************
+ok: [client] => {
+    "id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "
+}
+ok: [server] => {
+    "id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "
+}
+
+TASK [backup : Create File System on backup disk] ******************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true}
+
+TASK [backup : Create borg user] ***********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "comment": "", "create_home": true, "group": 1001, "home": "/home/borg", "name": "borg", "shell": "/bin/bash", "state": "present", "system": false, "uid": 1001}
+
+TASK [backup : Create /.ssh/ dir] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "gid": 1001, "group": "borg", "mode": "0700", "owner": "borg", "path": "/home/borg/.ssh/", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 6, "state": "directory", "uid": 1001}
+
+TASK [backup : Create /.ssh/authorized_keys] ***********************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "dest": "/home/borg/.ssh/authorized_keys", "gid": 1001, "group": "borg", "mode": "0600", "owner": "borg", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 0, "state": "file", "uid": 1001}
+
+TASK [backup : Change backupdir ownership /var/backup/] ************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "gid": 1001, "group": "borg", "mode": "0755", "owner": "borg", "path": "/var/backup/", "secontext": "unconfined_u:object_r:var_t:s0", "size": 6, "state": "directory", "uid": 1001}
+
+TASK [backup : create fstab] ***************************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "dump": "0", "fstab": "/etc/fstab", "fstype": "xfs", "name": "/var/backup", "opts": "defaults", "passno": "0", "src": "/dev/sdb"}
+
+TASK [backup : mount /var/backup] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "cmd": ["mount", "-a"], "delta": "0:00:00.014761", "end": "2023-06-28 12:35:41.929251", "rc": 0, "start": "2023-06-28 12:35:41.914490", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : add ssh key from client] ****************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "cmd": "echo 'command=\"/usr/bin/borg serve\" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP ' > /home/borg/.ssh/authorized_keys", "delta": "0:00:00.003109", "end": "2023-06-28 12:35:42.252748", "rc": 0, "start": "2023-06-28 12:35:42.249639", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : update ssh config] **********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : update ssh config] **********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : update ssh config] **********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : repo init] ******************************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+fatal: [client]: FAILED! => {"changed": true, "cmd": ["borg", "init", "-e", "none", "borg@192.168.56.160:/var/backup"], "delta": "0:00:01.594608", "end": "2023-06-28 12:35:45.133624", "msg": "non-zero return code", "rc": 2, "start": "2023-06-28 12:35:43.539016", "stderr": "Remote: Warning: Permanently added '192.168.56.160' (ECDSA) to the list of known hosts.\r\nTraceback (most recent call last):\n\n  File \"/usr/lib64/python3.6/site-packages/borg/remote.py\", line 247, in serve\n    res = f(**args)\n\n  File \"/usr/lib64/python3.6/site-packages/borg/remote.py\", line 375, in open\n    self.repository.__enter__()  # clean exit handled by serve() method\n\n  File \"/usr/lib64/python3.6/site-packages/borg/repository.py\", line 197, in __enter__\n    self.create(self.path)\n\n  File \"/usr/lib64/python3.6/site-packages/borg/repository.py\", line 281, in create\n    with open(os.path.join(path, 'README'), 'w') as fd:\n\nPermissionError: [Errno 13] Permission denied: '/var/backup/README'\n\nBorg server: Platform: Linux server 3.10.0-1127.el7.x86_64 #1 SMP Tue Mar 31 23:36:51 UTC 2020 x86_64\nBorg server: Linux: CentOS Linux 7.8.2003 Core\nBorg server: Borg: 1.1.18  Python: CPython 3.6.8 msgpack: 0.5.6\nBorg server: PID: 3981  CWD: /home/borg\nBorg server: sys.argv: ['/usr/bin/borg', 'serve']\nBorg server: SSH_ORIGINAL_COMMAND: 'borg serve --umask=077'\nPlatform: Linux client 3.10.0-1127.el7.x86_64 #1 SMP Tue Mar 31 23:36:51 UTC 2020 x86_64\nLinux: CentOS Linux 7.8.2003 Core\nBorg: 1.1.18  Python: CPython 3.6.8 msgpack: 0.5.6\nPID: 7361  CWD: /home/vagrant\nsys.argv: ['/bin/borg', 'init', '-e', 'none', 'borg@192.168.56.160:/var/backup']\nSSH_ORIGINAL_COMMAND: None", "stderr_lines": ["Remote: Warning: Permanently added '192.168.56.160' (ECDSA) to the list of known hosts.", "Traceback (most recent call last):", "", "  File \"/usr/lib64/python3.6/site-packages/borg/remote.py\", line 247, in serve", "    res = f(**args)", "", "  File \"/usr/lib64/python3.6/site-packages/borg/remote.py\", line 375, in open", "    self.repository.__enter__()  # clean exit handled by serve() method", "", "  File \"/usr/lib64/python3.6/site-packages/borg/repository.py\", line 197, in __enter__", "    self.create(self.path)", "", "  File \"/usr/lib64/python3.6/site-packages/borg/repository.py\", line 281, in create", "    with open(os.path.join(path, 'README'), 'w') as fd:", "", "PermissionError: [Errno 13] Permission denied: '/var/backup/README'", "", "Borg server: Platform: Linux server 3.10.0-1127.el7.x86_64 #1 SMP Tue Mar 31 23:36:51 UTC 2020 x86_64", "Borg server: Linux: CentOS Linux 7.8.2003 Core", "Borg server: Borg: 1.1.18  Python: CPython 3.6.8 msgpack: 0.5.6", "Borg server: PID: 3981  CWD: /home/borg", "Borg server: sys.argv: ['/usr/bin/borg', 'serve']", "Borg server: SSH_ORIGINAL_COMMAND: 'borg serve --umask=077'", "Platform: Linux client 3.10.0-1127.el7.x86_64 #1 SMP Tue Mar 31 23:36:51 UTC 2020 x86_64", "Linux: CentOS Linux 7.8.2003 Core", "Borg: 1.1.18  Python: CPython 3.6.8 msgpack: 0.5.6", "PID: 7361  CWD: /home/vagrant", "sys.argv: ['/bin/borg', 'init', '-e', 'none', 'borg@192.168.56.160:/var/backup']", "SSH_ORIGINAL_COMMAND: None"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [backup : daemon reload on client] ****************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [client] => {"changed": true, "cmd": ["systemctl", "daemon-reload"], "delta": "0:00:00.055053", "end": "2023-06-28 12:35:45.480007", "rc": 0, "start": "2023-06-28 12:35:45.424954", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.timer] ***************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [client] => {"changed": true, "cmd": "systemctl enable borg-backup.timer && systemctl restart borg-backup.timer", "delta": "0:00:00.065755", "end": "2023-06-28 12:35:45.970374", "rc": 0, "start": "2023-06-28 12:35:45.904619", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.service] *************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+fatal: [client]: FAILED! => {"changed": true, "cmd": "systemctl enable borg-backup.service && systemctl restart borg-backup.service", "delta": "0:00:01.673365", "end": "2023-06-28 12:35:47.935955", "msg": "non-zero return code", "rc": 1, "start": "2023-06-28 12:35:46.262590", "stderr": "Job for borg-backup.service failed because the control process exited with error code. See \"systemctl status borg-backup.service\" and \"journalctl -xe\" for details.", "stderr_lines": ["Job for borg-backup.service failed because the control process exited with error code. See \"systemctl status borg-backup.service\" and \"journalctl -xe\" for details."], "stdout": "", "stdout_lines": []}
+...ignoring
+
+PLAY RECAP *********************************************************************
+client                     : ok=18   changed=5    unreachable=0    failed=0    skipped=8    rescued=0    ignored=2   
+server                     : ok=13   changed=10   unreachable=0    failed=0    skipped=10   rescued=0    ignored=0   
+
+==> server: Running provisioner: ansible...
+    server: Running ansible-playbook...
+PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true ANSIBLE_HOST_KEY_CHECKING=false ANSIBLE_SSH_ARGS='-o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ControlMaster=auto -o ControlPersist=60s' ansible-playbook --connection=ssh --timeout=30 --limit="all" --inventory-file=/test_vm/.vagrant/provisioners/ansible/inventory -v ansible/backup/install.yaml
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [Configuration backup server] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [client]
+ok: [server]
+
+TASK [backup : install epel repo] **********************************************
+ok: [client] => {"changed": false, "changes": {"installed": [], "updated": []}, "msg": "", "rc": 0, "results": ["All packages providing epel-release are up to date", ""]}
+changed: [server] => {"changed": true, "changes": {"installed": [], "updated": [["epel-release", "7-14.noarch from epel"]]}, "msg": "", "rc": 0, "results": ["Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirrors.datahouse.ru\n * epel: mirror.logol.ru\n * extras: mirrors.datahouse.ru\n * updates: centos-mirror.rbc.ru\nResolving Dependencies\n--> Running transaction check\n---> Package epel-release.noarch 0:7-11 will be updated\n---> Package epel-release.noarch 0:7-14 will be an update\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                Arch             Version           Repository      Size\n================================================================================\nUpdating:\n epel-release           noarch           7-14              epel            15 k\n\nTransaction Summary\n================================================================================\nUpgrade  1 Package\n\nTotal download size: 15 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Updating   : epel-release-7-14.noarch                                     1/2 \n  Cleanup    : epel-release-7-11.noarch                                     2/2 \n  Verifying  : epel-release-7-14.noarch                                     1/2 \n  Verifying  : epel-release-7-11.noarch                                     2/2 \n\nUpdated:\n  epel-release.noarch 0:7-14                                                    \n\nComplete!\n"]}
+
+TASK [backup : install borgbackup] *********************************************
+ok: [server] => {"changed": false, "changes": {"installed": [], "updated": []}, "msg": "", "rc": 0, "results": ["All packages providing borgbackup are up to date", ""]}
+ok: [client] => {"changed": false, "changes": {"installed": [], "updated": []}, "msg": "", "rc": 0, "results": ["All packages providing borgbackup are up to date", ""]}
+
+TASK [backup : Create ssh root dir] ********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"changed": false, "gid": 0, "group": "root", "mode": "0700", "owner": "root", "path": "/root/.ssh/", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 38, "state": "directory", "uid": 0}
+
+TASK [backup : Create a borg-backup.service] ***********************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"changed": false, "checksum": "fe1b5d1d94ea84c3800f8fd40245797a9b426891", "dest": "/etc/systemd/system/borg-backup.service", "gid": 0, "group": "root", "mode": "0644", "owner": "root", "path": "/etc/systemd/system/borg-backup.service", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 488, "state": "file", "uid": 0}
+
+TASK [backup : Create a borg-backup.timer] *************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"changed": false, "checksum": "84fb7bdd19f0a5aa87a44c2dac1905e0e12d1a1c", "dest": "/etc/systemd/system/borg-backup.timer", "gid": 0, "group": "root", "mode": "0644", "owner": "root", "path": "/etc/systemd/system/borg-backup.timer", "secontext": "system_u:object_r:systemd_unit_file_t:s0", "size": 94, "state": "file", "uid": 0}
+
+TASK [backup : Generate an OpenSSH rsa keypair with a different size (2048 bits)] ***
+ok: [client] => {"changed": false, "comment": "", "filename": "/root/.ssh/id_rsa", "fingerprint": "SHA256:X7mWQA26Rdzmly4rCREQNs1QXky4C9Xzhsso+w08WTA", "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP", "size": 2048, "type": "rsa"}
+
+TASK [backup : get id rsa] *****************************************************
+changed: [client] => {"changed": true, "cmd": "cat /root/.ssh/id_rsa.pub", "delta": "0:00:00.003894", "end": "2023-06-28 12:36:45.662999", "rc": 0, "start": "2023-06-28 12:36:45.659105", "stderr": "", "stderr_lines": [], "stdout": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP ", "stdout_lines": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "]}
+
+TASK [backup : set_fact] *******************************************************
+ok: [client] => {"ansible_facts": {"id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "}, "changed": false}
+
+TASK [backup : get local facts] ************************************************
+ok: [client]
+ok: [server]
+
+TASK [backup : debug] **********************************************************
+ok: [client] => {
+    "id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "
+}
+ok: [server] => {
+    "id_rsa": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP "
+}
+
+TASK [backup : Create File System on backup disk] ******************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [server] => {"changed": false}
+
+TASK [backup : Create borg user] ***********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [server] => {"append": false, "changed": false, "comment": "", "group": 1001, "home": "/home/borg", "move_home": false, "name": "borg", "shell": "/bin/bash", "state": "present", "uid": 1001}
+
+TASK [backup : Create /.ssh/ dir] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [server] => {"changed": false, "gid": 1001, "group": "borg", "mode": "0700", "owner": "borg", "path": "/home/borg/.ssh/", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 29, "state": "directory", "uid": 1001}
+
+TASK [backup : Create /.ssh/authorized_keys] ***********************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "dest": "/home/borg/.ssh/authorized_keys", "gid": 1001, "group": "borg", "mode": "0600", "owner": "borg", "secontext": "unconfined_u:object_r:ssh_home_t:s0", "size": 412, "state": "file", "uid": 1001}
+
+TASK [backup : Change backupdir ownership /var/backup/] ************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "gid": 1001, "group": "borg", "mode": "0755", "owner": "borg", "path": "/var/backup/", "secontext": "system_u:object_r:unlabeled_t:s0", "size": 6, "state": "directory", "uid": 1001}
+
+TASK [backup : create fstab] ***************************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [server] => {"changed": false, "dump": "0", "fstab": "/etc/fstab", "fstype": "xfs", "name": "/var/backup", "opts": "defaults", "passno": "0", "src": "/dev/sdb"}
+
+TASK [backup : mount /var/backup] **********************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "cmd": ["mount", "-a"], "delta": "0:00:00.004343", "end": "2023-06-28 12:36:49.125883", "rc": 0, "start": "2023-06-28 12:36:49.121540", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : add ssh key from client] ****************************************
+skipping: [client] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [server] => {"changed": true, "cmd": "echo 'command=\"/usr/bin/borg serve\" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKWhGwhvnCEZPz/xTKr+ic7kJIQBRL5jRmNPKKEytyxRnRUyIatL0Ky1XKeEieDdkK8t8rndgEjKPCJgiuG8Zu0dHiGJui2cztmU35qHteaxoUyO8Ptgk/EhMOExh92zbtHURcX4GdLaTprclAyc0x9z+v2Dl4c5Z/Bbwfiqo6Fi6Hlfqc68QAcwwa1ImmP3it4Um6KG4yjCy5NlSZcERKx5KXHIW+2UmD+byzGxSJJq2JsTgGssTtaQeDB8ulJh0F1Pi9IdHf5g5exaPNPN5DHxuFNCVIv2q5+dinVZ/mqpr1m7T5pZ0K4PkFvHLKUd4t5Yh3JkizboadV5TRTFJP ' > /home/borg/.ssh/authorized_keys", "delta": "0:00:00.003040", "end": "2023-06-28 12:36:49.431453", "rc": 0, "start": "2023-06-28 12:36:49.428413", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : update ssh config] **********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : update ssh config] **********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : update ssh config] **********************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+ok: [client] => {"backup": "", "changed": false, "msg": ""}
+
+TASK [backup : repo init] ******************************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [client] => {"changed": true, "cmd": ["borg", "init", "-e", "none", "borg@192.168.56.160:/var/backup"], "delta": "0:00:01.663817", "end": "2023-06-28 12:36:52.329324", "rc": 0, "start": "2023-06-28 12:36:50.665507", "stderr": "Remote: Warning: Permanently added '192.168.56.160' (ECDSA) to the list of known hosts.", "stderr_lines": ["Remote: Warning: Permanently added '192.168.56.160' (ECDSA) to the list of known hosts."], "stdout": "", "stdout_lines": []}
+
+TASK [backup : daemon reload on client] ****************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [client] => {"changed": true, "cmd": ["systemctl", "daemon-reload"], "delta": "0:00:00.059776", "end": "2023-06-28 12:36:52.682798", "rc": 0, "start": "2023-06-28 12:36:52.623022", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.timer] ***************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [client] => {"changed": true, "cmd": "systemctl enable borg-backup.timer && systemctl restart borg-backup.timer", "delta": "0:00:00.075145", "end": "2023-06-28 12:36:53.053025", "rc": 0, "start": "2023-06-28 12:36:52.977880", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [backup : enable borg-backup.service] *************************************
+skipping: [server] => {"changed": false, "skip_reason": "Conditional result was False"}
+changed: [client] => {"changed": true, "cmd": "systemctl enable borg-backup.service && systemctl restart borg-backup.service", "delta": "0:00:06.912245", "end": "2023-06-28 12:37:00.261775", "rc": 0, "start": "2023-06-28 12:36:53.349530", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+client                     : ok=18   changed=5    unreachable=0    failed=0    skipped=8    rescued=0    ignored=0   
+server                     : ok=13   changed=5    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0   
+
