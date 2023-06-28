@@ -25,7 +25,7 @@
 
 1) Создал [Vagrantfile](https://github.com/hellolightSP/otus_hw17/blob/main/Vagrantfile)
 - Написал автоматизацию на [ansible](https://github.com/hellolightSP/otus_hw17/tree/main/ansible/backup)
-- [Лог развертывания](https://github.com/hellolightSP/otus_hw16/blob/main/otus_hw17_backup) 
+- [Лог развертывания](https://github.com/hellolightSP/otus_hw17/blob/main/otus_hw17_backup) 
 
 2) Не смог автоматизировать процесс равертывания сервиса borg с зашифрованным ключем, в момент инициализации возникает запрос пароля, не знаю как это обойти в ansible, поэтому
   использовал инициализацию репозитория в плейбуке без ключа
