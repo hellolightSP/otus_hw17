@@ -10,7 +10,6 @@
     name: borgbackup
     state: latest
 
-
 - name: install client block
   block:
 
