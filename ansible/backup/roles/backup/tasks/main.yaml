@@ -136,12 +136,12 @@
     - name: daemon reload on client
       command: systemctl daemon-reload
 
-    - name: enable borg-backup.service
-      shell: systemctl enable borg-backup.service && systemctl restart borg-backup.service
-      ignore_errors: true
-
     - name: enable borg-backup.timer
       shell: systemctl enable borg-backup.timer && systemctl restart borg-backup.timer
+      ignore_errors: true
+    
+    - name: enable borg-backup.service
+      shell: systemctl enable borg-backup.service && systemctl restart borg-backup.service
       ignore_errors: true
 
   when: ansible_hostname == 'client'
