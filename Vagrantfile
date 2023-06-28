@@ -15,7 +15,7 @@ MACHINES = {
 
      :disks => {
         :sata2 => {
-            :dfile => './sata57.vdi',
+            :dfile => './sata59.vdi',
             :size => 2048,
             :port => 1
                  }
@@ -53,7 +53,7 @@ case boxname.to_s
     end
   end
             if needsController == true
-                vb.customize ["storagectl", :id, "--name", "IDE57", "--add", "sata" ]
+                vb.customize ["storagectl", :id, "--name", "IDE59", "--add", "sata" ]
                 boxconfig[:disks].each do |dname, dconf|
                 vb.customize ['storageattach', :id,  '--storagectl', 'IDE', '--port', dconf[:port], '--device', 0, '--type', 'hdd', '--medium', dconf[:dfile]]
          end
@@ -63,7 +63,7 @@ case boxname.to_s
     config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/backup/install.yaml"
     ansible.limit = "all"
-#    ansible.verbose = "true"
+    ansible.verbose = "true"
       end
     end
   end
